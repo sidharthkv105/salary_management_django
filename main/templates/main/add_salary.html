@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Add Salary{% endblock %}
+
+{% block content %}
+<h2>Add Salary</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <p style="color: green;">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+<form method="post" class="salary-form">
+    {% csrf_token %}
+    
+    <div class="form-section">
+        <h3>Income/Pay Details</h3>
+        <p>Salary Date: <input type="date" name="salary_date" required></p>
+        <p>Pay: <input type="number" step="0.01" name="pay" required></p>
+        <p>DA: <input type="number" step="0.01" name="da" required></p>
+        <p>HRA: <input type="number" step="0.01" name="hra" required></p>
+        <p>Allowance: <input type="number" step="0.01" name="allowance" required></p>
+        <p>C/O Date: <input type="date" name="co_date" required></p>
+    </div>
+
+    <div class="form-section">
+        <h3>Deductions</h3>
+        <p>GPF: <input type="number" step="0.01" name="gpf" required></p>
+        <p>SLI: <input type="number" step="0.01" name="sli" required></p>
+        <p>GIS: <input type="number" step="0.01" name="gis" required></p>
+        <p>LIC: <input type="number" step="0.01" name="lic" required></p>
+        <p>MEDISEP: <input type="number" step="0.01" name="medisep" required></p>
+        <p>GPAIS: <input type="number" step="0.01" name="gpais" required></p>
+        <p>PRO TAX: <input type="number" step="0.01" name="pro_tax" required></p>
+        <p>I TAX: <input type="number" step="0.01" name="i_tax" required></p>
+    </div>
+
+    <div class="form-footer">
+        <button type="submit">Save Salary</button>
+    </div>
+</form>
+{% endblock %}

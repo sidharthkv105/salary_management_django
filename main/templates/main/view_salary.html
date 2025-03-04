@@ -1,0 +1,117 @@
+{% extends 'main/base.html' %}
+
+{% block title %}View Salary{% endblock %}
+
+{% block content %}
+<h2>Salary Records</h2>
+
+<form method="get" action="{% url 'view_salary' %}" style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+    <label for="year">Select Year:</label>
+    <select name="year" id="year" onchange="this.form.submit()">
+        {% for year in all_years %}
+            <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>{{ year }}</option>
+        {% endfor %}
+    </select>
+    <a href="{% url 'download_salary_pdf' selected_year %}" style="padding: 5px 10px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">Download PDF</a>
+</form>
+
+<table class="salary-table">
+    <thead>
+        <tr>
+            <th>Salary Date</th>
+            <th>C/O Date</th>
+            <th>Pay</th>
+            <th>DA</th>
+            <th>HRA</th>
+            <th>Allowance</th>
+            <th>Gross</th>
+            <th>GPF</th>
+            <th>SLI</th>
+            <th>GIS</th>
+            <th>LIC</th>
+            <th>MEDISEP</th>
+            <th>GPAIS</th>
+            <th>PRO TAX</th>
+            <th>I TAX</th>
+            <th>Deduction</th>
+            <th>Net</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if salaries %}
+            {% for salary in salaries %}
+            <tr>
+                <td>{{ salary.salary_date }}</td>
+                <td>{{ salary.co_date }}</td>
+                <td>{{ salary.pay }}</td>
+                <td>{{ salary.da }}</td>
+                <td>{{ salary.hra }}</td>
+                <td>{{ salary.allowance }}</td>
+                <td>{{ salary.gross }}</td>
+                <td>{{ salary.gpf }}</td>
+                <td>{{ salary.sli }}</td>
+                <td>{{ salary.gis }}</td>
+                <td>{{ salary.lic }}</td>
+                <td>{{ salary.medisep }}</td>
+                <td>{{ salary.gpais }}</td>
+                <td>{{ salary.pro_tax }}</td>
+                <td>{{ salary.i_tax }}</td>
+                <td>{{ salary.deduction }}</td>
+                <td>{{ salary.net }}</td>
+                <td>
+                    <a href="{% url 'edit_salary' salary.id %}">Edit</a> |
+                    <a href="{% url 'delete_salary' salary.id %}" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="18" style="text-align: center;">No records found for {{ selected_year }}</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+<style>
+.salary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    border: 2px solid #0b3b70;  /* Outer border */
+}
+
+.salary-table th, .salary-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #5d86b2;  /* Inner cell borders */
+}
+
+.salary-table th {
+    background-color: #0b3b70;
+    color: white;
+    font-weight: bold;
+}
+
+.salary-table tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+.salary-table tr:hover {
+    background-color: #e9f5ff;
+}
+
+.salary-table a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.salary-table a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+</style>
+
+{% endblock %}
